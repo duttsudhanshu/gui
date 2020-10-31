@@ -47,7 +47,7 @@ stages:
     name: default
   jobs:
   - ${{ if contains(parameters.productName, 'CFX') }}:
-      - job: Design
+      - job: Design4CFX
         displayName: Design
         steps:
         - task: PythonScript@0
@@ -72,8 +72,8 @@ stages:
             arguments: 'downloadConfiguration  -n myNEFProject -t nef.xml'
             pythonInterpreter: /usr/bin/python3
             
-   - ${{ if contains(parameters.productName, 'TAS') }}:
-      - job: Design
+  - ${{ if contains(parameters.productName, 'TAS') }}:
+      - job: Design4TAS
         displayName: Design
         steps:
         - task: PythonScript@0
@@ -99,7 +99,7 @@ stages:
             pythonInterpreter: /usr/bin/python3
             
    - ${{ if contains(parameters.productName, 'NEF') }}:
-      - job: Design
+      - job: Design4NEF
         displayName: Design
         steps:
         - task: PythonScript@0
