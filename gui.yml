@@ -42,7 +42,7 @@ trigger: none
 stages:
 
 - stage: Requirement
-  displayName: Project Requirement for ${{ parameters.projectName }}
+  displayName: Project  ${{ parameters.projectName }}
   pool:
     name: default
   jobs:
