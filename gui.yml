@@ -47,22 +47,22 @@ stages:
     - task: PythonScript@0
       displayName: 'Plato Login'
       inputs:
-        scriptPath: /home/sistudio/agent/plato/plato.py
+        scriptPath: /home/thomas/plato/plato.py
         arguments: 'login -u ppareek -p Marvel@2020'
         pythonInterpreter: /usr/bin/python3
-        workingDirectory: /home/sistudio/agent/plato/
+        workingDirectory: /home/thomas/plato/
 
     - task: PythonScript@0
       displayName: 'Plato Create Project'
       inputs:
-        scriptPath: /home/sistudio/agent/plato/plato.py
+        scriptPath: /home/thomas/plato/plato.py
         arguments: 'createProject -f NEF_NEF205_devops.xlsx -n myNEFProject -c NOK'
         pythonInterpreter: /usr/bin/python3
 
     - task: PythonScript@0
       displayName: 'Download XML'
       inputs:
-        scriptPath: /home/sistudio/agent/plato/plato.py
+        scriptPath: /home/thomas/plato/plato.py
         arguments: 'downloadConfiguration  -n myNEFProject -t nef.xml'
         pythonInterpreter: /usr/bin/python3
 
