@@ -98,7 +98,7 @@ stages:
             arguments: 'downloadConfiguration  -n myNEFProject -t nef.xml'
             pythonInterpreter: /usr/bin/python3
             
-   - ${{ if contains(parameters.productName, 'NEF') }}:
+  - ${{ if contains(parameters.productName, 'NEF') }}:
       - job: Design4NEF
         displayName: Design
         steps:
