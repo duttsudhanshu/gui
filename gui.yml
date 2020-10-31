@@ -55,7 +55,7 @@ stages:
         echo "projectName=${{ parameters.projectName }};productName=${{ parameters.productName }};release=${{ parameters.releaseName }}" > /home/thomas/${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }}/projectDetails.txt
         
     - task: PythonScript@0
-              displayName: 'create Jira for  ${{ parameters.projectName }} ${{ parameters.productName }} ${{ parameters.releaseName }}'
+              displayName: create Jira for  ${{ parameters.projectName }} ${{ parameters.productName }} ${{ parameters.releaseName }}
               inputs:
                 scriptPath: /home/thomas/jira/jira.py
                 arguments: 'create'
