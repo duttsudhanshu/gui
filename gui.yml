@@ -11,7 +11,7 @@ parameters:
 - name: productName
   displayName: Product Name
   type: string
-  default: volte
+  default: CFX
   values:
   - CFX
   - TAS
@@ -20,7 +20,7 @@ parameters:
 - name: releaseName
   displayName: release Name
   type: string
-  default: volte
+  default: 20.5
   values:
   - 20.5
   - 20.8
@@ -82,30 +82,31 @@ stages:
 - stage: Design
   displayName: Design
   jobs:
-  - job: Design
-    displayName: Design
-    steps:
-    - task: PythonScript@0
-      displayName: 'Plato Login'
-      inputs:
-        scriptPath: /home/thomas/plato/plato.py
-        arguments: 'login -u ppareek -p Marvel@2020'
-        pythonInterpreter: /usr/bin/python3
-        workingDirectory: /home/thomas/plato/
+  - ${{ if contains(parameters.productName, 'CFX') }}:
+      - job: Design
+        displayName: Design
+        steps:
+        - task: PythonScript@0
+          displayName: 'Plato Login for CFX'
+          inputs:
+            scriptPath: /home/thomas/plato/plato.py
+            arguments: 'login -u ppareek -p Marvel@2020'
+            pythonInterpreter: /usr/bin/python3
+            workingDirectory: /home/thomas/plato/
 
-    - task: PythonScript@0
-      displayName: 'Plato Create Project'
-      inputs:
-        scriptPath: /home/thomas/plato/plato.py
-        arguments: 'createProject -f NEF_NEF205_devops.xlsx -n myNEFProject -c NOK'
-        pythonInterpreter: /usr/bin/python3
+        - task: PythonScript@0
+          displayName: 'Plato Create Project for CFX'
+          inputs:
+            scriptPath: /home/thomas/plato/plato.py
+            arguments: 'createProject -f NEF_NEF205_devops.xlsx -n myNEFProject -c NOK'
+            pythonInterpreter: /usr/bin/python3
 
-    - task: PythonScript@0
-      displayName: 'Download XML'
-      inputs:
-        scriptPath: /home/thomas/plato/plato.py
-        arguments: 'downloadConfiguration  -n myNEFProject -t nef.xml'
-        pythonInterpreter: /usr/bin/python3
+        - task: PythonScript@0
+          displayName: 'Download XML for CFX'
+          inputs:
+            scriptPath: /home/thomas/plato/plato.py
+            arguments: 'downloadConfiguration  -n myNEFProject -t nef.xml'
+            pythonInterpreter: /usr/bin/python3
 
 - stage: Deployment
   displayName: project Deployment
