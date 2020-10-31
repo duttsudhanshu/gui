@@ -1,22 +1,87 @@
 parameters:
-- name: image
-  displayName: Pool Image
+- name: projectName
+  displayName: Project Name
   type: string
-  default: ubuntu-latest
+  default: volte
   values:
-  - windows-latest
-  - vs2017-win2016
-  - ubuntu-latest
-  - ubuntu-16.04
-  - macOS-latest
-  - macOS-10.14
+  - volte
+  - VoWifi
+  - 5Gcore
+  
+- name: productName
+  displayName: Product Name
+  type: string
+  default: volte
+  values:
+  - CFX
+  - TAS
+  - NEF  
+  
+- name: releaseName
+  displayName: release Name
+  type: string
+  default: volte
+  values:
+  - 20.5
+  - 20.8
+  - 21.0  
 
 trigger: none
 
-jobs:
-- job: build
-  displayName: build
-  pool: 
-    vmImage: ${{ parameters.image }}
-  steps:
-  - script: echo building $(Build.BuildNumber) with ${{ parameters.image }}
+stages:
+
+- stage: Requirement
+  displayName: project Requirement
+  pool:
+    name: sudhanshu-pool
+  jobs:
+  - job: build
+    displayName: Take project Input from user
+    pool: 
+    project: ${{ parameters.projectName }}
+    steps:
+    - script: echo starting  $(Build.BuildNumber) with ${{ parameters.projectName }}      
+   
+- stage: Design
+  displayName: project Design
+  pool:
+    name: sudhanshu-pool
+  jobs:
+  - job: Design
+    displayName: Project Design
+    pool: 
+    project: ${{ parameters.projectName }}
+    steps:
+    - task: PythonScript@0
+      displayName: 'Plato Login'
+      inputs:
+        scriptPath: /home/sistudio/agent/plato/plato.py
+        arguments: 'login -u ppareek -p Marvel@2020'
+        pythonInterpreter: /usr/bin/python3
+        workingDirectory: /home/sistudio/agent/plato/
+
+    - task: PythonScript@0
+      displayName: 'Plato Create Project'
+      inputs:
+        scriptPath: /home/sistudio/agent/plato/plato.py
+        arguments: 'createProject -f NEF_NEF205_devops.xlsx -n myNEFProject -c NOK'
+        pythonInterpreter: /usr/bin/python3
+
+    - task: PythonScript@0
+      displayName: 'Download XML'
+      inputs:
+        scriptPath: /home/sistudio/agent/plato/plato.py
+        arguments: 'downloadConfiguration  -n myNEFProject -t nef.xml'
+        pythonInterpreter: /usr/bin/python3
+
+- stage: Deployment
+  displayName: project Deployment
+  pool:
+    name: sudhanshu-pool
+  jobs:
+  - job: build
+    displayName: trigger the deployment for 
+    pool: 
+    project: ${{ parameters.projectName }}
+    steps:
+    - script: echo deployment started for  ${{ parameters.productName }}  and release ${{parameters.releaseName}}
