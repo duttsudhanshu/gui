@@ -35,20 +35,20 @@ stages:
   pool:
     name: sudhanshu-pool
   jobs:
-  - job: build
-    displayName: Take project Input from user
+  - job: requirement
+    displayName: Requirement
     pool: 
     project: ${{ parameters.projectName }}
     steps:
     - script: echo starting  $(Build.BuildNumber) with ${{ parameters.projectName }}      
    
 - stage: Design
-  displayName: project Design
+  displayName: Design
   pool:
     name: sudhanshu-pool
   jobs:
   - job: Design
-    displayName: Project Design
+    displayName: Design
     pool: 
     project: ${{ parameters.projectName }}
     steps:
