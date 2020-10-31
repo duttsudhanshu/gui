@@ -25,6 +25,14 @@ parameters:
   - 20.5
   - 20.8
   - 21.0  
+  
+  
+- name: Customer
+  displayName: Release
+  type: string
+  default: USA
+  
+  
  
 
 - name: designRequired
@@ -42,7 +50,7 @@ trigger: none
 stages:
 
 - stage: Requirement
-  displayName: Project  ${{ parameters.projectName }}
+  displayName: Project  ${{ parameters.Customer }} ${{ parameters.projectName }}
   pool:
     name: default
   jobs:
