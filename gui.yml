@@ -49,8 +49,7 @@ stages:
   - job: requirement
     displayName: Requirement    
     steps:
-    - script: >        
-        echo "Staring design & deployment for   ${{ parameters.projectName }} , ${{ parameters.productName }} , ${{ parameters.releaseName }}"
+    - script: >                
         mkdir -p /home/thomas/${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }}   
         touch /home/thomas/${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }}/projectDeTails.txt        
 
