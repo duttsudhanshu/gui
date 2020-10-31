@@ -51,7 +51,7 @@ stages:
     steps:
     - script: echo starting  $(Build.BuildNumber) with ${{ parameters.projectName }}      
 
-- ${{ if eq(parameters.designReq, true) }}:   
+- ${{ if eq(parameters.designRequired, true) }}:   
     - stage: Design
       displayName: Design
       pool:
@@ -135,7 +135,7 @@ stages:
                 arguments: 'downloadConfiguration  -n myNEFProject -t nef.xml'
                 pythonInterpreter: /usr/bin/python3
 
-- ${{ if eq(parameters.deploymentReq, true) }}:
+- ${{ if eq(parameters.deploymentRequired, true) }}:
     - stage: Deployment
       displayName: project Deployment
       pool:
