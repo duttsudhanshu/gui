@@ -32,8 +32,6 @@ stages:
 
 - stage: Requirement
   displayName: project Requirement
-  pool:
-    name: sudhanshu-pool
   jobs:
   - job: requirement
     displayName: Requirement    
@@ -42,8 +40,6 @@ stages:
    
 - stage: Design
   displayName: Design
-  pool:
-    name: sudhanshu-pool
   jobs:
   - job: Design
     displayName: Design
@@ -72,8 +68,6 @@ stages:
 
 - stage: Deployment
   displayName: project Deployment
-  pool:
-    name: sudhanshu-pool
   jobs:
   - job: build
     displayName: 'trigger the deployment for '
