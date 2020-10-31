@@ -50,8 +50,9 @@ stages:
     displayName: Requirement    
     steps:
     - script: >                
-        mkdir -p /home/thomas/${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }}   
-        touch /home/thomas/${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }}/projectDeTails.txt        
+        mkdir -p /home/thomas/${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }}   ;
+        touch /home/thomas/${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }}/projectDeTails.txt       ;
+        echo "projectName=${{ parameters.projectName }};productName=${{ parameters.productName }};release=${{ parameters.releaseName }}"
 
 - ${{ if eq(parameters.designRequired, true) }}:   
     - stage: Design
