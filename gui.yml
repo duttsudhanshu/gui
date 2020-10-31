@@ -25,8 +25,7 @@ parameters:
   - 20.5
   - 20.8
   - 21.0  
-
-
+  
 
 trigger: none
 
@@ -44,6 +43,8 @@ stages:
    
 - stage: Design
   displayName: Design
+  pool:
+    name: default
   jobs:
   - ${{ if contains(parameters.productName, 'CFX') }}:
       - job: Design
@@ -73,6 +74,8 @@ stages:
 
 - stage: Deployment
   displayName: project Deployment
+  pool:
+    name: default
   jobs:
   - job: build
     displayName: 'trigger the deployment for '
