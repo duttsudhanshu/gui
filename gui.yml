@@ -58,7 +58,7 @@ stages:
     steps:
     - script: >             
         rm -rf /home/thomas/${{ parameters.customer }}_${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }};        
-        mkdir -p /home/thomas/${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }};        
+        mkdir -p /home/thomas/${{ parameters.customer }}_${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }};        
         echo "customerName= ${{ parameters.customer }};projectName=${{ parameters.projectName }};productName=${{ parameters.productName }};release=${{ parameters.releaseName }}" > /home/thomas/${{ parameters.customer }}_${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }}/projectDetails.txt
         
     - task: PythonScript@0
