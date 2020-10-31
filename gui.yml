@@ -27,12 +27,12 @@ parameters:
   - 21.0  
  
 
-- name: designReq
+- name: designRequired
   type: boolean
   default: false
   
   
-- name: deploymentReq
+- name: deploymentRequired
   type: boolean
   default: false
 
@@ -142,6 +142,6 @@ stages:
         name: default
       jobs:
       - job: build
-        displayName: 'Depyment is required for NF' 
+        displayName: 'Depyment is required for  ${{ parameters.productName }}  and release ${{parameters.releaseName}}'
         steps:
         - script: echo deployment started for  ${{ parameters.productName }}  and release ${{parameters.releaseName}}
