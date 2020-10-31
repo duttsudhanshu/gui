@@ -73,6 +73,8 @@ stages:
 
 - stage: Requirement
   displayName: project Requirement
+  pool:
+    name: localhost
   jobs:
   - job: requirement
     displayName: Requirement    
