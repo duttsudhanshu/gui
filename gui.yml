@@ -36,9 +36,7 @@ stages:
     name: sudhanshu-pool
   jobs:
   - job: requirement
-    displayName: Requirement
-    pool: 
-    project: ${{ parameters.projectName }}
+    displayName: Requirement    
     steps:
     - script: echo starting  $(Build.BuildNumber) with ${{ parameters.projectName }}      
    
@@ -49,8 +47,6 @@ stages:
   jobs:
   - job: Design
     displayName: Design
-    pool: 
-    project: ${{ parameters.projectName }}
     steps:
     - task: PythonScript@0
       displayName: 'Plato Login'
@@ -80,8 +76,6 @@ stages:
     name: sudhanshu-pool
   jobs:
   - job: build
-    displayName: trigger the deployment for 
-    pool: 
-    project: ${{ parameters.projectName }}
+    displayName: 'trigger the deployment for '
     steps:
     - script: echo deployment started for  ${{ parameters.productName }}  and release ${{parameters.releaseName}}
