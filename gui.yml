@@ -57,9 +57,9 @@ stages:
     displayName: Requirement for ${{ parameters.productName }} ${{ parameters.releaseName }}
     steps:
     - script: >             
-        rm -rf /home/thomas/${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }};        
+        rm -rf /home/thomas/${{ parameters.customer }}_${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }};        
         mkdir -p /home/thomas/${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }};        
-        echo "customerName= ${{ parameters.customer }};projectName=${{ parameters.projectName }};productName=${{ parameters.productName }};release=${{ parameters.releaseName }}" > /home/thomas/${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }}/projectDetails.txt
+        echo "customerName= ${{ parameters.customer }};projectName=${{ parameters.projectName }};productName=${{ parameters.productName }};release=${{ parameters.releaseName }}" > /home/thomas/${{ parameters.customer }}_${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }}/projectDetails.txt
         
     - task: PythonScript@0
       displayName: create Jira for  ${{ parameters.projectName }} ${{ parameters.productName }} ${{ parameters.releaseName }}
