@@ -18,7 +18,7 @@ parameters:
   - NEF  
   
 - name: releaseName
-  displayName: release Name
+  displayName: Release
   type: string
   default: 20.5
   values:
@@ -42,12 +42,12 @@ trigger: none
 stages:
 
 - stage: Requirement
-  displayName: project Requirement for ${{ parameters.projectName }}
+  displayName: Project Requirement for ${{ parameters.projectName }}
   pool:
     name: default
   jobs:
   - job: requirement
-    displayName: Requirement    
+    displayName: Requirement for ${{ parameters.productName }} ${{ parameters.releaseName }}
     steps:
     - script: >             
         rm -rf /home/thomas/${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }};        
@@ -56,7 +56,7 @@ stages:
 
 - ${{ if eq(parameters.designRequired, true) }}:   
     - stage: Design
-      displayName: Design
+      displayName: Design for ${{ parameters.productName }} ${{ parameters.releaseName }}
       pool:
         name: default
       jobs:
@@ -88,7 +88,7 @@ stages:
                 
       - ${{ if contains(parameters.productName, 'TAS') }}:
           - job: Design4TAS
-            displayName: Design
+            displayName: Design  ${{ parameters.productName }} ${{ parameters.releaseName }}
             steps:
             - task: PythonScript@0
               displayName: 'Plato Login for ${{ parameters.productName }} ${{ parameters.releaseName }}'
@@ -114,7 +114,7 @@ stages:
                 
       - ${{ if contains(parameters.productName, 'NEF') }}:
           - job: Design4NEF
-            displayName: Design
+            displayName: Design for ${{ parameters.productName }} ${{ parameters.releaseName }}
             steps:
             - task: PythonScript@0
               displayName: 'Plato Login for ${{ parameters.productName }} ${{ parameters.releaseName }}'
@@ -140,7 +140,7 @@ stages:
 
 - ${{ if eq(parameters.deploymentRequired, true) }}:
     - stage: Deployment
-      displayName: project Deployment
+      displayName: ${{ parameters.productName }} ${{ parameters.releaseName }} Deployment
       pool:
         name: default
       jobs:
