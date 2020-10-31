@@ -25,7 +25,12 @@ parameters:
   - 20.5
   - 20.8
   - 21.0  
-  
+ 
+
+- name: deploymentReq
+  type: boolean
+  default: false
+
 
 trigger: none
 
@@ -124,13 +129,13 @@ stages:
             arguments: 'downloadConfiguration  -n myNEFProject -t nef.xml'
             pythonInterpreter: /usr/bin/python3
 
-
-- stage: Deployment
-  displayName: project Deployment
-  pool:
-    name: default
-  jobs:
-  - job: build
-    displayName: 'trigger the deployment for '
-    steps:
-    - script: echo deployment started for  ${{ parameters.productName }}  and release ${{parameters.releaseName}}
+- ${{ if eq(parameters.runPerfTests, true) }}:
+    - stage: Deployment
+      displayName: project Deployment
+      pool:
+        name: default
+      jobs:
+      - job: build
+        displayName: 'Depyment is required for NF' 
+        steps:
+        - script: echo deployment started for  ${{ parameters.productName }}  and release ${{parameters.releaseName}}
