@@ -26,45 +26,6 @@ parameters:
   - 20.8
   - 21.0  
 
-- name: Param1
-  displayName: param1
-  type: string
-  default: volte
-  values:
-  - 20.5
-  - 20.8
-  - 21.0  
-
-
-- name: Param2
-  displayName: param2
-  type: string
-  default: volte
-  values:
-  - 20.5
-  - 20.8
-  - 21.0  
-
-
-- name: Param3
-  displayName: param3
-  type: string
-  default: volte
-  values:
-  - 20.5
-  - 20.8
-  - 21.0  
-
-
-
-- name: Param4
-  displayName: param4
-  type: string
-  default: volte
-  values:
-  - 20.5
-  - 20.8
-  - 21.0  
 
 
 trigger: none
@@ -74,7 +35,7 @@ stages:
 - stage: Requirement
   displayName: project Requirement
   pool:
-    name: localhost
+    name: default
   jobs:
   - job: requirement
     displayName: Requirement    
