@@ -56,6 +56,9 @@ stages:
         
     - task: PythonScript@0
       displayName: create Jira for  ${{ parameters.projectName }} ${{ parameters.productName }} ${{ parameters.releaseName }}
+      continueOnError: true
+      enabled: true
+      timeoutInMinutes: 100000
       inputs:
         scriptPath: /home/thomas/jira/jira.py
         arguments: 'create'
@@ -74,6 +77,9 @@ stages:
             steps:
             - task: PythonScript@0
               displayName: 'Plato Login for ${{ parameters.productName }} ${{ parameters.releaseName }}'
+              continueOnError: true
+              enabled: true
+              timeoutInMinutes: 100000
               inputs:
                 scriptPath: /home/thomas/plato/plato.py
                 arguments: 'login -u ppareek -p Marvel@2020'
