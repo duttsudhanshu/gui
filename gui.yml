@@ -58,7 +58,6 @@ stages:
       displayName: create Jira for  ${{ parameters.projectName }} ${{ parameters.productName }} ${{ parameters.releaseName }}
       continueOnError: true
       enabled: true
-      timeoutInMinutes: 100000
       inputs:
         scriptPath: /home/thomas/jira/jira.py
         arguments: 'create'
@@ -88,6 +87,8 @@ stages:
 
             - task: PythonScript@0
               displayName: 'Plato Create Project for ${{ parameters.productName }} ${{ parameters.releaseName }}'
+              continueOnError: true
+              enabled: true
               inputs:
                 scriptPath: /home/thomas/plato/plato.py
                 arguments: 'createProject -f NEF_NEF205_devops.xlsx -n myNEFProject -c NOK'
@@ -95,6 +96,8 @@ stages:
 
             - task: PythonScript@0
               displayName: 'Download XML for ${{ parameters.productName }} ${{ parameters.releaseName }}'
+              continueOnError: true
+              enabled: true
               inputs:
                 scriptPath: /home/thomas/plato/plato.py
                 arguments: 'downloadConfiguration  -n myNEFProject -t nef.xml'
@@ -106,6 +109,8 @@ stages:
             steps:
             - task: PythonScript@0
               displayName: 'Plato Login for ${{ parameters.productName }} ${{ parameters.releaseName }}'
+              continueOnError: true
+              enabled: true
               inputs:
                 scriptPath: /home/thomas/plato/plato.py
                 arguments: 'login -u ppareek -p Marvel@2020'
@@ -114,6 +119,8 @@ stages:
 
             - task: PythonScript@0
               displayName: 'Plato Create Project for ${{ parameters.productName }} ${{ parameters.releaseName }}'
+              continueOnError: true
+              enabled: true
               inputs:
                 scriptPath: /home/thomas/plato/plato.py
                 arguments: 'createProject -f NEF_NEF205_devops.xlsx -n myNEFProject -c NOK'
@@ -121,6 +128,8 @@ stages:
 
             - task: PythonScript@0
               displayName: 'Download XML for ${{ parameters.productName }} ${{ parameters.releaseName }}'
+              continueOnError: true
+              enabled: true
               inputs:
                 scriptPath: /home/thomas/plato/plato.py
                 arguments: 'downloadConfiguration  -n myNEFProject -t nef.xml'
@@ -132,6 +141,8 @@ stages:
             steps:
             - task: PythonScript@0
               displayName: 'Plato Login for ${{ parameters.productName }} ${{ parameters.releaseName }}'
+              continueOnError: true
+              enabled: true
               inputs:
                 scriptPath: /home/thomas/plato/plato.py
                 arguments: 'login -u ppareek -p Marvel@2020'
@@ -140,6 +151,8 @@ stages:
 
             - task: PythonScript@0
               displayName: 'Plato Create Project for ${{ parameters.productName }} ${{ parameters.releaseName }}'
+              continueOnError: true
+              enabled: true
               inputs:
                 scriptPath: /home/thomas/plato/plato.py
                 arguments: 'createProject -f NEF_NEF205_devops.xlsx -n myNEFProject -c NOK'
@@ -147,6 +160,8 @@ stages:
 
             - task: PythonScript@0
               displayName: 'Download XML for ${{ parameters.productName }} ${{ parameters.releaseName }}'
+              continueOnError: true
+              enabled: true
               inputs:
                 scriptPath: /home/thomas/plato/plato.py
                 arguments: 'downloadConfiguration  -n myNEFProject -t nef.xml'
