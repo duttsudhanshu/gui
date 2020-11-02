@@ -57,19 +57,19 @@ stages:
     displayName: Requirement for ${{ parameters.productName }} ${{ parameters.releaseName }}
     steps:
     - script: >             
-        rm -rf /home/thomas/${{ parameters.customer }}_${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }};        
-        mkdir -p /home/thomas/${{ parameters.customer }}_${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }};        
-        echo "customerName= ${{ parameters.customer }};projectName=${{ parameters.projectName }};productName=${{ parameters.productName }};release=${{ parameters.releaseName }}" > /home/thomas/${{ parameters.customer }}_${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }}/projectDetails.txt
+        rm -rf /home/sistudio/agent/${{ parameters.customer }}_${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }};        
+        mkdir -p /home/sistudio/agent/${{ parameters.customer }}_${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }};        
+        echo "customerName= ${{ parameters.customer }};projectName=${{ parameters.projectName }};productName=${{ parameters.productName }};release=${{ parameters.releaseName }}" > /home/sistudio/agent/${{ parameters.customer }}_${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }}/projectDetails.txt
         
     - task: PythonScript@0
       displayName: create Jira for  ${{ parameters.projectName }} ${{ parameters.productName }} ${{ parameters.releaseName }}
       continueOnError: true
       enabled: true
       inputs:
-        scriptPath: /home/thomas/jira/jira.py
+        scriptPath: /home/sistudio/agent/jira/createIssue.py
         arguments: 'create'
         pythonInterpreter: /usr/bin/python3
-        workingDirectory: /home/thomas/${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }}
+        workingDirectory: /home/sistudio/agent/${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }}
 
 - ${{ if eq(parameters.designRequired, true) }}:   
     - stage: Design
@@ -87,17 +87,17 @@ stages:
               enabled: true
               timeoutInMinutes: 100000
               inputs:
-                scriptPath: /home/thomas/plato/plato.py
-                arguments: 'login -u ppareek -p Marvel@2020'
+                scriptPath: /home/sistudio/agent/plato/plato.py
+                arguments: 'login -u ppareek -p pass'
                 pythonInterpreter: /usr/bin/python3
-                workingDirectory: /home/thomas/plato/
+                workingDirectory: /home/sistudio/agent/plato/
 
             - task: PythonScript@0
               displayName: 'Plato Create Project for ${{ parameters.productName }} ${{ parameters.releaseName }}'
               continueOnError: true
               enabled: true
               inputs:
-                scriptPath: /home/thomas/plato/plato.py
+                scriptPath: /home/sistudio/agent/plato/plato.py
                 arguments: 'createProject -f NEF_NEF205_devops.xlsx -n myNEFProject -c NOK'
                 pythonInterpreter: /usr/bin/python3
 
@@ -106,7 +106,7 @@ stages:
               continueOnError: true
               enabled: true
               inputs:
-                scriptPath: /home/thomas/plato/plato.py
+                scriptPath: /home/sistudio/agent/plato/plato.py
                 arguments: 'downloadConfiguration  -n myNEFProject -t nef.xml'
                 pythonInterpreter: /usr/bin/python3
                 
@@ -119,17 +119,17 @@ stages:
               continueOnError: true
               enabled: true
               inputs:
-                scriptPath: /home/thomas/plato/plato.py
-                arguments: 'login -u ppareek -p Marvel@2020'
+                scriptPath: /home/sistudio/agent/plato/plato.py
+                arguments: 'login -u ppareek -p pass'
                 pythonInterpreter: /usr/bin/python3
-                workingDirectory: /home/thomas/plato/
+                workingDirectory: /home/sistudio/agent/plato/
 
             - task: PythonScript@0
               displayName: 'Plato Create Project for ${{ parameters.productName }} ${{ parameters.releaseName }}'
               continueOnError: true
               enabled: true
               inputs:
-                scriptPath: /home/thomas/plato/plato.py
+                scriptPath: /home/sistudio/agent/plato/plato.py
                 arguments: 'createProject -f NEF_NEF205_devops.xlsx -n myNEFProject -c NOK'
                 pythonInterpreter: /usr/bin/python3
 
@@ -138,7 +138,7 @@ stages:
               continueOnError: true
               enabled: true
               inputs:
-                scriptPath: /home/thomas/plato/plato.py
+                scriptPath: /home/sistudio/agent/plato/plato.py
                 arguments: 'downloadConfiguration  -n myNEFProject -t nef.xml'
                 pythonInterpreter: /usr/bin/python3
                 
@@ -151,17 +151,17 @@ stages:
               continueOnError: true
               enabled: true
               inputs:
-                scriptPath: /home/thomas/plato/plato.py
-                arguments: 'login -u ppareek -p Marvel@2020'
+                scriptPath: /home/sistudio/agent/plato/plato.py
+                arguments: 'login -u ppareek -p pass'
                 pythonInterpreter: /usr/bin/python3
-                workingDirectory: /home/thomas/plato/
+                workingDirectory: /home/sistudio/agent/plato/
 
             - task: PythonScript@0
               displayName: 'Plato Create Project for ${{ parameters.productName }} ${{ parameters.releaseName }}'
               continueOnError: true
               enabled: true
               inputs:
-                scriptPath: /home/thomas/plato/plato.py
+                scriptPath: /home/sistudio/agent/plato/plato.py
                 arguments: 'createProject -f NEF_NEF205_devops.xlsx -n myNEFProject -c NOK'
                 pythonInterpreter: /usr/bin/python3
 
@@ -170,7 +170,7 @@ stages:
               continueOnError: true
               enabled: true
               inputs:
-                scriptPath: /home/thomas/plato/plato.py
+                scriptPath: /home/sistudio/agent/plato/plato.py
                 arguments: 'downloadConfiguration  -n myNEFProject -t nef.xml'
                 pythonInterpreter: /usr/bin/python3
 
