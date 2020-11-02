@@ -98,7 +98,7 @@ stages:
               enabled: true
               inputs:
                 scriptPath: /home/sistudio/agent/plato/plato.py
-                arguments: 'createProject -f NEF_NEF205_devops.xlsx -n myNEFProject -c NOK'
+                arguments: 'createProject -f /home/sistudio/agent/plato/NEF_NEF205_devops.xlsx -n myNEFProject -c NOK'
                 pythonInterpreter: /usr/bin/python3
 
             - task: PythonScript@0
@@ -130,7 +130,7 @@ stages:
               enabled: true
               inputs:
                 scriptPath: /home/sistudio/agent/plato/plato.py
-                arguments: 'createProject -f NEF_NEF205_devops.xlsx -n myNEFProject -c NOK'
+                arguments: 'createProject -f /home/sistudio/agent/plato/NEF_NEF205_devops.xlsx -n myNEFProject -c NOK'
                 pythonInterpreter: /usr/bin/python3
 
             - task: PythonScript@0
@@ -162,7 +162,7 @@ stages:
               enabled: true
               inputs:
                 scriptPath: /home/sistudio/agent/plato/plato.py
-                arguments: 'createProject -f NEF_NEF205_devops.xlsx -n myNEFProject -c NOK'
+                arguments: 'createProject -f /home/sistudio/agent/plato/NEF_NEF205_devops.xlsx -n myNEFProject -c NOK'
                 pythonInterpreter: /usr/bin/python3
 
             - task: PythonScript@0
