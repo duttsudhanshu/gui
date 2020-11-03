@@ -67,7 +67,7 @@ stages:
       enabled: true
       inputs:
         scriptPath: /home/sistudio/agent/jira/createIssue.py
-        arguments: 'create'
+        arguments: ''
         pythonInterpreter: /usr/bin/python3
         workingDirectory: /home/sistudio/agent/${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }}
 
