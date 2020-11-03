@@ -69,7 +69,6 @@ stages:
         scriptPath: /home/sistudio/agent/jira/createIssue.py
         arguments: ''
         pythonInterpreter: /usr/bin/python3
-        workingDirectory: /home/sistudio/agent/${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }}
 
 - ${{ if eq(parameters.designRequired, true) }}:   
     - stage: Design
