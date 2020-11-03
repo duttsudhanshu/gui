@@ -84,7 +84,6 @@ stages:
               displayName: 'Plato Login for ${{ parameters.productName }} ${{ parameters.releaseName }}'
               continueOnError: true
               enabled: true
-              timeoutInMinutes: 100000
               inputs:
                 scriptPath: /home/sistudio/agent/plato/plato.py
                 arguments: 'login -u ppareek -p Marvel@2020'
