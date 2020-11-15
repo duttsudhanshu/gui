@@ -7,7 +7,7 @@ parameters:
   - Volte
   - VoWifi
   - 5G
-  
+
 - name: productName
   displayName: Product Name
   type: string
@@ -15,8 +15,8 @@ parameters:
   values:
   - CFX
   - TAS
-  - NEF  
-  
+  - NEF
+
 - name: releaseName
   displayName: Release
   type: string
@@ -24,21 +24,21 @@ parameters:
   values:
   - 20.5
   - 20.8
-  - 21.0  
-  
-  
+  - 21.0
+
+
 - name: customer
   displayName: Customer name
   type: string
   default: NAM
-  
-  
+
+
 
 - name: designRequired
   type: boolean
   default: false
-  
-  
+
+
 - name: deploymentRequired
   type: boolean
   default: false
@@ -56,11 +56,11 @@ stages:
   - job: requirement
     displayName: Requirement for ${{ parameters.productName }} ${{ parameters.releaseName }}
     steps:
-    - script: >             
-        rm -rf /home/sistudio/agent/${{ parameters.customer }}_${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }};        
-        mkdir -p /home/sistudio/agent/${{ parameters.customer }}_${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }};        
+    - script: >
+        rm -rf /home/sistudio/agent/${{ parameters.customer }}_${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }};
+        mkdir -p /home/sistudio/agent/${{ parameters.customer }}_${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }};
         echo "customerName= ${{ parameters.customer }};projectName=${{ parameters.projectName }};productName=${{ parameters.productName }};release=${{ parameters.releaseName }}" > /home/sistudio/agent/${{ parameters.customer }}_${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }}/projectDetails.txt
-        
+
     - task: PythonScript@0
       displayName: create Jira for  ${{ parameters.projectName }} ${{ parameters.productName }} ${{ parameters.releaseName }}
       continueOnError: true
@@ -70,7 +70,7 @@ stages:
         arguments: ''
         pythonInterpreter: /usr/bin/python3
 
-- ${{ if eq(parameters.designRequired, true) }}:   
+- ${{ if eq(parameters.designRequired, true) }}:
     - stage: Design
       displayName: Design for ${{ parameters.productName }} ${{ parameters.releaseName }}
       pool:
@@ -81,6 +81,14 @@ stages:
             displayName: Design for ${{ parameters.productName }} ${{ parameters.releaseName }}
             steps:
             - task: PythonScript@0
+              displayName: Add  Jira Comment for  ${{ parameters.projectName }} ${{ parameters.productName }} ${{ parameters.releaseName }}
+              continueOnError: true
+              enabled: true
+              inputs:
+                scriptPath: /home/sistudio/agent/jira/addComment.py
+                arguments: 'Design started for ${{ parameters.projectName }} ${{ parameters.productName }} ${{ parameters.releaseName }}'
+                pythonInterpreter: /usr/bin/python3
+            - task: PythonScript@0
               displayName: 'Plato Login for ${{ parameters.productName }} ${{ parameters.releaseName }}'
               continueOnError: true
               enabled: true
@@ -107,12 +115,20 @@ stages:
                 scriptPath: /home/sistudio/agent/plato/plato.py
                 arguments: 'downloadConfiguration  -n myNEFProject -t nef.xml'
                 pythonInterpreter: /usr/bin/python3
-                
+
       - ${{ if contains(parameters.productName, 'TAS') }}:
           - job: Design4TAS
             displayName: Design  ${{ parameters.productName }} ${{ parameters.releaseName }}
             steps:
             - task: PythonScript@0
+                displayName: Add  Jira Comment for  ${{ parameters.projectName }} ${{ parameters.productName }} ${{ parameters.releaseName }}
+                continueOnError: true
+                enabled: true
+                inputs:
+                  scriptPath: /home/sistudio/agent/jira/addComment.py
+                  arguments: 'Design started for ${{ parameters.projectName }} ${{ parameters.productName }} ${{ parameters.releaseName }}'
+                  pythonInterpreter: /usr/bin/python3
+            - task: PythonScript@0
               displayName: 'Plato Login for ${{ parameters.productName }} ${{ parameters.releaseName }}'
               continueOnError: true
               enabled: true
@@ -139,11 +155,19 @@ stages:
                 scriptPath: /home/sistudio/agent/plato/plato.py
                 arguments: 'downloadConfiguration  -n myNEFProject -t nef.xml'
                 pythonInterpreter: /usr/bin/python3
-                
+
       - ${{ if contains(parameters.productName, 'NEF') }}:
           - job: Design4NEF
             displayName: Design for ${{ parameters.productName }} ${{ parameters.releaseName }}
             steps:
+            - task: PythonScript@0
+              displayName: Add  Jira Comment for  ${{ parameters.projectName }} ${{ parameters.productName }} ${{ parameters.releaseName }}
+              continueOnError: true
+              enabled: true
+              inputs:
+                scriptPath: /home/sistudio/agent/jira/addComment.py
+                arguments: 'Design started for ${{ parameters.projectName }} ${{ parameters.productName }} ${{ parameters.releaseName }}'
+                pythonInterpreter: /usr/bin/python3
             - task: PythonScript@0
               displayName: 'Plato Login for ${{ parameters.productName }} ${{ parameters.releaseName }}'
               continueOnError: true
