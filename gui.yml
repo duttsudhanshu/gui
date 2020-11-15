@@ -121,13 +121,13 @@ stages:
             displayName: 'Design  ${{ parameters.productName }} ${{ parameters.releaseName }}'
             steps:
             - task: PythonScript@0
-                displayName: 'Add  Jira Comment for  ${{ parameters.projectName }} ${{ parameters.productName }} ${{ parameters.releaseName }}'
-                continueOnError: true
-                enabled: true
-                inputs:
-                  scriptPath: /home/sistudio/agent/jira/addComment.py
-                  arguments: 'Design started for ${{ parameters.projectName }} ${{ parameters.productName }} ${{ parameters.releaseName }}'
-                  pythonInterpreter: /usr/bin/python3
+              displayName: 'Add  Jira Comment for  ${{ parameters.projectName }} ${{ parameters.productName }} ${{ parameters.releaseName }}'
+              continueOnError: true
+              enabled: true
+              inputs:
+                scriptPath: /home/sistudio/agent/jira/addComment.py
+                arguments: 'Design started for ${{ parameters.projectName }} ${{ parameters.productName }} ${{ parameters.releaseName }}'
+                pythonInterpreter: /usr/bin/python3
             - task: PythonScript@0
               displayName: 'Plato Login for ${{ parameters.productName }} ${{ parameters.releaseName }}'
               continueOnError: true
