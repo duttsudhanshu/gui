@@ -81,7 +81,7 @@ stages:
             displayName: Design for ${{ parameters.productName }} ${{ parameters.releaseName }}
             steps:
             - task: PythonScript@0
-              displayName: Add  Jira Comment for  ${{ parameters.projectName }} ${{ parameters.productName }} ${{ parameters.releaseName }}
+              displayName: 'Add  Jira Comment for  ${{ parameters.projectName }} ${{ parameters.productName }} ${{ parameters.releaseName }}'
               continueOnError: true
               enabled: true
               inputs:
@@ -121,7 +121,7 @@ stages:
             displayName: Design  ${{ parameters.productName }} ${{ parameters.releaseName }}
             steps:
             - task: PythonScript@0
-                displayName: Add  Jira Comment for  ${{ parameters.projectName }} ${{ parameters.productName }} ${{ parameters.releaseName }}
+                displayName: 'Add  Jira Comment for  ${{ parameters.projectName }} ${{ parameters.productName }} ${{ parameters.releaseName }}'
                 continueOnError: true
                 enabled: true
                 inputs:
@@ -161,7 +161,7 @@ stages:
             displayName: Design for ${{ parameters.productName }} ${{ parameters.releaseName }}
             steps:
             - task: PythonScript@0
-              displayName: Add  Jira Comment for  ${{ parameters.projectName }} ${{ parameters.productName }} ${{ parameters.releaseName }}
+              displayName: 'Add  Jira Comment for  ${{ parameters.projectName }} ${{ parameters.productName }} ${{ parameters.releaseName }}'
               continueOnError: true
               enabled: true
               inputs:
