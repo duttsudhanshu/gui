@@ -206,11 +206,11 @@ stages:
         displayName: 'Depyment is required for  ${{ parameters.productName }}  and release ${{parameters.releaseName}}'
         steps:
         - task: PythonScript@0
-           displayName: 'Add  Jira Comment for  ${{ parameters.projectName }} ${{ parameters.productName }} ${{ parameters.releaseName }}'
-           continueOnError: true
-           enabled: true
-           inputs:
-             scriptPath: /home/sistudio/agent/jira/addComment.py
-             arguments: 'Deployment_started_for_${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }}'
-             pythonInterpreter: /usr/bin/python3
+          displayName: 'Add  Jira Comment for  ${{ parameters.projectName }} ${{ parameters.productName }} ${{ parameters.releaseName }}'
+          continueOnError: true
+          enabled: true
+          inputs:
+            scriptPath: /home/sistudio/agent/jira/addComment.py
+            arguments: 'Deployment_started_for_${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }}'
+            pythonInterpreter: /usr/bin/python3
         - script: echo deployment started for  ${{ parameters.productName }}  and release ${{parameters.releaseName}}
