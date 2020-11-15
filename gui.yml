@@ -86,7 +86,7 @@ stages:
               enabled: true
               inputs:
                 scriptPath: /home/sistudio/agent/plato/plato.py
-                arguments: 'login -u ppareek -p Marvel@2020'
+                arguments: 'login -u suparash -p Fashion2020!'
                 pythonInterpreter: /usr/bin/python3
                 workingDirectory: /home/sistudio/agent/plato/
 
@@ -150,7 +150,7 @@ stages:
               enabled: true
               inputs:
                 scriptPath: /home/sistudio/agent/plato/plato.py
-                arguments: 'login -u ppareek -p Marvel@2020'
+                arguments: 'login -u suparash -p Fashion2020!'
                 pythonInterpreter: /usr/bin/python3
                 workingDirectory: /home/sistudio/agent/plato/
 
