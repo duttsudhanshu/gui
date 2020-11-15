@@ -54,7 +54,7 @@ stages:
     name: default
   jobs:
   - job: requirement
-    displayName: Requirement for ${{ parameters.productName }} ${{ parameters.releaseName }}
+    displayName: 'Requirement for ${{ parameters.productName }} ${{ parameters.releaseName }}'
     steps:
     - script: >
         rm -rf /home/sistudio/agent/${{ parameters.customer }}_${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }};
@@ -78,7 +78,7 @@ stages:
       jobs:
       - ${{ if contains(parameters.productName, 'CFX') }}:
           - job: Design4CFX
-            displayName: Design for ${{ parameters.productName }} ${{ parameters.releaseName }}
+            displayName: 'Design for ${{ parameters.productName }} ${{ parameters.releaseName }}'
             steps:
             - task: PythonScript@0
               displayName: 'Add  Jira Comment for  ${{ parameters.projectName }} ${{ parameters.productName }} ${{ parameters.releaseName }}'
@@ -118,7 +118,7 @@ stages:
 
       - ${{ if contains(parameters.productName, 'TAS') }}:
           - job: Design4TAS
-            displayName: Design  ${{ parameters.productName }} ${{ parameters.releaseName }}
+            displayName: 'Design  ${{ parameters.productName }} ${{ parameters.releaseName }}'
             steps:
             - task: PythonScript@0
                 displayName: 'Add  Jira Comment for  ${{ parameters.projectName }} ${{ parameters.productName }} ${{ parameters.releaseName }}'
