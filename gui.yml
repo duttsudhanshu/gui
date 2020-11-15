@@ -166,7 +166,7 @@ stages:
               enabled: true
               inputs:
                 scriptPath: /home/sistudio/agent/jira/addComment.py
-                arguments: 'Design started for ${{ parameters.projectName }} ${{ parameters.productName }} ${{ parameters.releaseName }}'
+                arguments: 'Design_started_for_${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }}'
                 pythonInterpreter: /usr/bin/python3
             - task: PythonScript@0
               displayName: 'Plato Login for ${{ parameters.productName }} ${{ parameters.releaseName }}'
