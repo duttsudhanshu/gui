@@ -29,16 +29,18 @@ parameters:
 
 - name: token4GIT
   displayName: Token for Git
-  type: string
-  default: token4GIT
-
+  type: string  
+  default: nwzXQaN34DyzD9NHWQ8U
 
 - name: token4JIRA
   displayName: Token for JIRA
   type: string
-  default: token4Jira
+ 
   
-  
+- name: requiredPhase
+  displayName: Requirement Phase
+  type: boolean
+  default: false
   
 - name: designRequired
   displayName: Design Phase
@@ -51,10 +53,7 @@ parameters:
   type: boolean
   default: false
   
-- name: requiredPhase
-  displayName: Requirement Phase
-  type: boolean
-  default: false
+
 
 
 trigger: none
@@ -89,7 +88,7 @@ stages:
           enabled: true
           inputs:
             scriptPath: /home/sistudio/agent/git/createBranch.py
-            arguments: $${ parameters.token4GIT }} 29761 ${{ parameters.customer }}_${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }}
+            arguments: ${{ parameters.token4GIT }} 29761 ${{ parameters.customer }}_${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }}
             pythonInterpreter: /usr/bin/python3
 
 - ${{ if eq(parameters.designRequired, true) }}:
