@@ -17,22 +17,26 @@ parameters:
   - 20.8
   - 21.0
 
-
 - name: customer
   displayName: Customer Name
   type: string
-  default: NAM
+  default: VodafoneIndia
+
+- name: projectName
+  displayName: Project Name
+  type: string
+  default: NefPoc
 
 - name: token4GIT
   displayName: Token for Git
   type: string
-  default: 
+  default: token4GIT
 
 
 - name: token4JIRA
   displayName: Token for JIRA
   type: string
-  default: 
+  default: token4Jira
   
   
   
