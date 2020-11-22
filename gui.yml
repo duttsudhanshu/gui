@@ -1,26 +1,17 @@
 parameters:
-- name: projectName
-  displayName: Project Type
-  type: string
-  default: volte
-  values:
-  - Volte
-  - VoWifi
-  - 5G
-
 - name: productName
   displayName: Product Name
   type: string
-  default: CFX
+  default: NEF
   values:
   - CFX
   - TAS
   - NEF
 
 - name: releaseName
-  displayName: Release
+  displayName: Product Version
   type: string
-  default: 20.5
+  default: 20.8
   values:
   - 20.5
   - 20.8
@@ -28,18 +19,36 @@ parameters:
 
 
 - name: customer
-  displayName: Customer name
+  displayName: Customer Name
   type: string
   default: NAM
 
+- name: token4GIT
+  displayName: Token for Git
+  type: string
+  default: 
 
 
+- name: token4JIRA
+  displayName: Token for JIRA
+  type: string
+  default: 
+  
+  
+  
 - name: designRequired
+  displayName: Design Phase
   type: boolean
   default: false
 
 
 - name: deploymentRequired
+  displayName: Deployment Phase
+  type: boolean
+  default: false
+  
+- name: requiredPhase
+  displayName: Requirement Phase
   type: boolean
   default: false
 
@@ -47,28 +56,28 @@ parameters:
 trigger: none
 
 stages:
+- ${{ if eq(parameters.deploymentRequired, true) }}:
+    - stage: Requirement
+      displayName: ${{ parameters.customer }} ${{ parameters.projectName }}
+      pool:
+        name: default
+      jobs:
+      - job: requirement
+        displayName: 'Requirement for ${{ parameters.productName }} ${{ parameters.releaseName }}'
+        steps:
+        - script: >
+            rm -rf /home/sistudio/agent/${{ parameters.customer }}_${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }};
+            mkdir -p /home/sistudio/agent/${{ parameters.customer }}_${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }};
+            echo "customerName= ${{ parameters.customer }};projectName=${{ parameters.projectName }};productName=${{ parameters.productName }};release=${{ parameters.releaseName }}" > /home/sistudio/agent/${{ parameters.customer }}_${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }}/projectDetails.txt
 
-- stage: Requirement
-  displayName: ${{ parameters.customer }} ${{ parameters.projectName }}
-  pool:
-    name: default
-  jobs:
-  - job: requirement
-    displayName: 'Requirement for ${{ parameters.productName }} ${{ parameters.releaseName }}'
-    steps:
-    - script: >
-        rm -rf /home/sistudio/agent/${{ parameters.customer }}_${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }};
-        mkdir -p /home/sistudio/agent/${{ parameters.customer }}_${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }};
-        echo "customerName= ${{ parameters.customer }};projectName=${{ parameters.projectName }};productName=${{ parameters.productName }};release=${{ parameters.releaseName }}" > /home/sistudio/agent/${{ parameters.customer }}_${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }}/projectDetails.txt
-
-    - task: PythonScript@0
-      displayName: create Jira for  ${{ parameters.projectName }} ${{ parameters.productName }} ${{ parameters.releaseName }}
-      continueOnError: true
-      enabled: true
-      inputs:
-        scriptPath: /home/sistudio/agent/jira/createIssue.py
-        arguments: ''
-        pythonInterpreter: /usr/bin/python3
+        - task: PythonScript@0
+          displayName: create Jira for  ${{ parameters.projectName }} ${{ parameters.productName }} ${{ parameters.releaseName }}
+          continueOnError: true
+          enabled: true
+          inputs:
+            scriptPath: /home/sistudio/agent/jira/createIssue.py
+            arguments: ''
+            pythonInterpreter: /usr/bin/python3
 
 - ${{ if eq(parameters.designRequired, true) }}:
     - stage: Design
