@@ -60,14 +60,14 @@ parameters:
 trigger: none
 
 stages:
-- ${{ if eq(parameters.deploymentRequired, true) }}:
+- ${{ if eq(parameters.requiredPhase, true) }}:
     - stage: Requirement
       displayName: ${{ parameters.customer }} ${{ parameters.projectName }}
       pool:
         name: default
       jobs:
       - job: requirement
-        displayName: 'Requirement for ${{ parameters.productName }} ${{ parameters.releaseName }}'
+        displayName: 'Requirement for ${{ parameters.customer }} ${{ parameters.projectName }} ${{ parameters.productName }} ${{ parameters.releaseName }}'
         steps:
         - script: >
             rm -rf /home/sistudio/agent/${{ parameters.customer }}_${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }};
@@ -81,6 +81,15 @@ stages:
           inputs:
             scriptPath: /home/sistudio/agent/jira/createIssue.py
             arguments: ''
+            pythonInterpreter: /usr/bin/python3
+            
+        - task: PythonScript@0
+          displayName: 'create branch in GIT for   ${{ parameters.customer }}_${{ parameters.projectName }}_${{ parameters.productName }} ${{ parameters.releaseName }}'
+          continueOnError: true
+          enabled: true
+          inputs:
+            scriptPath: /home/sistudio/agent/git/createBranch.py
+            arguments: '$${ parameters.token4GIT }} 29761 ${{ parameters.customer }}_${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }}'
             pythonInterpreter: /usr/bin/python3
 
 - ${{ if eq(parameters.designRequired, true) }}:
