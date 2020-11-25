@@ -39,8 +39,8 @@ parameters:
   default: false
 
 
-- name: deploymentRequired
-  displayName: Deployment Prep
+- name: onboardingPrep
+  displayName: Onboarding Prep
   type: boolean
   default: false
   
@@ -215,20 +215,20 @@ stages:
                 pythonInterpreter: /usr/bin/python3
 
 - ${{ if eq(parameters.onboardingReq, true) }}:
-    - stage: Deployment
-      displayName: ${{ parameters.productName }} ${{ parameters.releaseName }} Deployment
+    - stage: Onboarding
+      displayName: ${{ parameters.productName }} ${{ parameters.releaseName }} Onboarding
       pool:
         name: default
       jobs:
       - job: build
-        displayName: 'Deployment Phase for  ${{ parameters.productName }}  and release ${{parameters.releaseName}}'
+        displayName: 'Onboarding Phase for  ${{ parameters.productName }}  and release ${{parameters.releaseName}}'
         steps:
         - task: PythonScript@0
-          displayName: 'Jira:Add Comment for  ${{ parameters.projectName }} ${{ parameters.productName }} ${{ parameters.releaseName }}'
+          displayName: 'Jira: Add Comment for  ${{ parameters.projectName }} ${{ parameters.productName }} ${{ parameters.releaseName }}'
           continueOnError: true
           enabled: true
           inputs:
             scriptPath: /home/sistudio/agent/jira/addComment.py
-            arguments: 'Deployment_started_for_${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }}'
+            arguments: 'Onboarding_started_for_${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }}'
             pythonInterpreter: /usr/bin/python3
-        - script: echo deployment started for  ${{ parameters.productName }}  and release ${{parameters.releaseName}}
+        - script: echo Onboarding started for  ${{ parameters.productName }}  and release ${{parameters.releaseName}}
