@@ -20,23 +20,14 @@ parameters:
 - name: customer
   displayName: Customer Name
   type: string
-  default: VodafoneIndia
+  default: 
 
 - name: projectName
   displayName: Project Name
   type: string
-  default: NefPoc
+  default: 
 
-- name: token4GIT
-  displayName: Token for Git
-  type: string  
-  default: nwzXQaN34DyzD9NHWQ8U
-
-- name: token4JIRA
-  displayName: Token for JIRA
-  type: string
  
-  
 - name: requiredPhase
   displayName: Requirement Phase
   type: boolean
@@ -49,10 +40,14 @@ parameters:
 
 
 - name: deploymentRequired
-  displayName: Deployment Phase
+  displayName: Deployment Prep
   type: boolean
   default: false
   
+- name: onboardingReq
+  displayName: CNF Onboarding
+  type: boolean
+  default: false
 
 
 
@@ -88,7 +83,7 @@ stages:
           enabled: true
           inputs:
             scriptPath: /home/sistudio/agent/git/createBranch.py
-            arguments: ${{ parameters.token4GIT }} 29761 ${{ parameters.customer }}_${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }}
+            arguments: nwzXQaN34DyzD9NHWQ8U 29761 ${{ parameters.customer }}_${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }}
             pythonInterpreter: /usr/bin/python3
           
         
@@ -219,7 +214,7 @@ stages:
                 arguments: 'downloadConfiguration  -n myNEFProject -t nef.xml'
                 pythonInterpreter: /usr/bin/python3
 
-- ${{ if eq(parameters.deploymentRequired, true) }}:
+- ${{ if eq(parameters.onboardingReq, true) }}:
     - stage: Deployment
       displayName: ${{ parameters.productName }} ${{ parameters.releaseName }} Deployment
       pool:
