@@ -224,7 +224,7 @@ stages:
         displayName: 'Deployment Phase for  ${{ parameters.productName }}  and release ${{parameters.releaseName}}'
         steps:
         - task: PythonScript@0
-          displayName: 'Jira: Add Comment for  ${{ parameters.projectName }} ${{ parameters.productName }} ${{ parameters.releaseName }}'
+          displayName: 'Jira:Add Comment for  ${{ parameters.projectName }} ${{ parameters.productName }} ${{ parameters.releaseName }}'
           continueOnError: true
           enabled: true
           inputs:
