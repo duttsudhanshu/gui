@@ -91,17 +91,7 @@ stages:
             arguments: ${{ parameters.token4GIT }} 29761 ${{ parameters.customer }}_${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }}
             pythonInterpreter: /usr/bin/python3
           
-        - task: projectumapsvsts.upload-sp-files-app.upload-sp-task.UploadFilesToSPDocLib@1
-          displayName: 'Upload files to SharePoint library '
-          inputs:
-            spUrl: 'https://nokia.sharepoint.com/'
-            targetFolder: '/GDC-India-SI-VoLTE-PM-Workgroup/EhOMqdhNwjFDp8arPTMbkDoBlaRjuE4TQXOQe70VmKUKSw?e=XXsBJq'
-            login: suparash
-            password: Fashion2020!
-            filesToUpload: '/home/sistudio/agent/git/abc.xml'
-            continueOnError: true
-            condition: succeededOrFailed()
-            timeoutInMinutes: 300
+        
 
 - ${{ if eq(parameters.designRequired, true) }}:
     - stage: Design
