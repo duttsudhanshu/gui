@@ -231,4 +231,11 @@ stages:
             scriptPath: /home/sistudio/agent/jira/addComment.py
             arguments: 'Onboarding_started_for_${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }}'
             pythonInterpreter: /usr/bin/python3
-        - script: echo Onboarding started for  ${{ parameters.productName }}  and release ${{parameters.releaseName}}
+        - task: PythonScript@0
+           displayName: 'Onboarding started for ${{ parameters.productName }} ${{ parameters.releaseName }}'
+           continueOnError: true
+           enabled: true
+           inputs:
+             scriptPath: /home/sistudio/agent/deployment/deployment.py
+             arguments: ''
+             pythonInterpreter: /usr/bin/python3
