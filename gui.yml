@@ -43,14 +43,27 @@ parameters:
   displayName: Onboarding Prep
   type: boolean
   default: false
+
+- name: onboardingPreChk
+  displayName: CNF Onboarding Pre Checks
+  type: boolean
+  default: false
   
 - name: onboardingReq
   displayName: CNF Onboarding
   type: boolean
   default: false
 
-
-
+- name: onboardingPostChk
+  displayName: CNF Onboarding Post Checks
+  type: boolean
+  default: false
+  
+- name: nonfunctional
+  displayName: Non Functional Test Suite
+  type: boolean
+  default: false
+  
 trigger: none
 
 stages:
@@ -213,6 +226,25 @@ stages:
                 scriptPath: /home/sistudio/agent/plato/plato.py
                 arguments: 'downloadConfiguration  -n myNEFProject -t nef.xml'
                 pythonInterpreter: /usr/bin/python3
+                
+- ${{ if eq(parameters.onboardingPreChk, true) }}:
+    - stage: OnboardingPreChk
+      displayName: ${{ parameters.productName }} ${{ parameters.releaseName }} Onboarding Precheck starting....
+      pool:
+        name: default
+      jobs:
+      - job: build
+        displayName: 'Onboarding Precheck Phase for  ${{ parameters.productName }}  and release ${{parameters.releaseName}}'
+        steps:        
+        - task: PythonScript@0
+          displayName: 'Onboarding Precheck started for ${{ parameters.productName }} ${{ parameters.releaseName }}'
+          continueOnError: true
+          enabled: true
+          inputs:
+            scriptPath: /home/sistudio/agent/deployment/check.py 
+            arguments: 'precheck'
+            pythonInterpreter: /usr/bin/python3
+
 
 - ${{ if eq(parameters.onboardingReq, true) }}:
     - stage: Onboarding
@@ -238,4 +270,40 @@ stages:
           inputs:
             scriptPath: /home/sistudio/agent/deployment/deployment.py
             arguments: ''
+            pythonInterpreter: /usr/bin/python3
+            
+- ${{ if eq(parameters.onboardingPostChk, true) }}:
+    - stage: OnboardingPostChk
+      displayName: ${{ parameters.productName }} ${{ parameters.releaseName }} Onboarding Precheck starting....
+      pool:
+        name: default
+      jobs:
+      - job: build
+        displayName: 'Onboarding PostCheck Phase for  ${{ parameters.productName }}  and release ${{parameters.releaseName}}'
+        steps:        
+        - task: PythonScript@0
+          displayName: 'Onboarding Postcheck started for ${{ parameters.productName }} ${{ parameters.releaseName }}'
+          continueOnError: true
+          enabled: true
+          inputs:
+            scriptPath: /home/sistudio/agent/deployment/check.py 
+            arguments: 'postcheck'
+            pythonInterpreter: /usr/bin/python3
+            
+- ${{ if eq(parameters.nonfunctional, true) }}:
+    - stage: NonFunctional
+      displayName: ${{ parameters.productName }} ${{ parameters.releaseName }} Onboarding Precheck starting....
+      pool:
+        name: default
+      jobs:
+      - job: build
+        displayName: 'Non Functional Test case Phase for  ${{ parameters.productName }}  and release ${{parameters.releaseName}}'
+        steps:        
+        - task: PythonScript@0
+          displayName: 'Non Functional Test cases  started for ${{ parameters.productName }} ${{ parameters.releaseName }}'
+          continueOnError: true
+          enabled: true
+          inputs:
+            scriptPath: /home/sistudio/agent/deployment/check.py 
+            arguments: 'nonfunctional'
             pythonInterpreter: /usr/bin/python3
