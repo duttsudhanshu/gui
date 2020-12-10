@@ -229,7 +229,7 @@ stages:
                 
 - ${{ if eq(parameters.onboardingPreChk, true) }}:
     - stage: OnboardingPreChk
-      displayName: ${{ parameters.productName }} ${{ parameters.releaseName }} Onboarding Precheck starting....
+      displayName: ${{ parameters.productName }} ${{ parameters.releaseName }} Onboarding Precheck
       pool:
         name: default
       jobs:
@@ -274,7 +274,7 @@ stages:
             
 - ${{ if eq(parameters.onboardingPostChk, true) }}:
     - stage: OnboardingPostChk
-      displayName: ${{ parameters.productName }} ${{ parameters.releaseName }} Onboarding Precheck starting....
+      displayName: ${{ parameters.productName }} ${{ parameters.releaseName }} Onboarding Postcheck
       pool:
         name: default
       jobs:
@@ -292,7 +292,7 @@ stages:
             
 - ${{ if eq(parameters.nonfunctional, true) }}:
     - stage: NonFunctional
-      displayName: ${{ parameters.productName }} ${{ parameters.releaseName }} Onboarding Precheck starting....
+      displayName: ${{ parameters.productName }} ${{ parameters.releaseName }} Onboarding NonFunctional
       pool:
         name: default
       jobs:
