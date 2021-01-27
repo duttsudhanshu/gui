@@ -71,22 +71,22 @@ stages:
     - stage: Requirement
       displayName: ${{ parameters.customer }} ${{ parameters.projectName }}
       pool:
-        name: default
+        name: sudPool
       jobs:
       - job: requirement
         displayName: 'Requirement Phase started for ${{ parameters.customer }} ${{ parameters.projectName }} ${{ parameters.productName }} ${{ parameters.releaseName }}'
         steps:
         - script: >
-            rm -rf /home/sistudio/agent/${{ parameters.customer }}_${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }};
-            mkdir -p /home/sistudio/agent/${{ parameters.customer }}_${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }};
-            echo "customerName= ${{ parameters.customer }};projectName=${{ parameters.projectName }};productName=${{ parameters.productName }};release=${{ parameters.releaseName }}" > /home/sistudio/agent/${{ parameters.customer }}_${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }}/projectDetails.txt
+            rm -rf /home/devops/agent/${{ parameters.customer }}_${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }};
+            mkdir -p /home/devops/agent/${{ parameters.customer }}_${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }};
+            echo "customerName= ${{ parameters.customer }};projectName=${{ parameters.projectName }};productName=${{ parameters.productName }};release=${{ parameters.releaseName }}" > /home/devops/agent/${{ parameters.customer }}_${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }}/projectDetails.txt
 
         - task: PythonScript@0
           displayName: JIRA create Task for  ${{ parameters.projectName }} ${{ parameters.productName }} ${{ parameters.releaseName }}
           continueOnError: true
           enabled: true
           inputs:
-            scriptPath: /home/sistudio/agent/jira/createIssue.py
+            scriptPath: /home/devops/agent/jira/createIssue.py
             arguments: ''
             pythonInterpreter: /usr/bin/python3
             
@@ -95,7 +95,7 @@ stages:
           continueOnError: true
           enabled: true
           inputs:
-            scriptPath: /home/sistudio/agent/git/createBranch.py
+            scriptPath: /home/devops/agent/git/createBranch.py
             arguments: nwzXQaN34DyzD9NHWQ8U 29761 ${{ parameters.customer }}_${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }}
             pythonInterpreter: /usr/bin/python3
           
@@ -105,7 +105,7 @@ stages:
     - stage: Design
       displayName: Design for ${{ parameters.productName }} ${{ parameters.releaseName }}
       pool:
-        name: default
+        name: sudPool
       jobs:
       - ${{ if contains(parameters.productName, 'CFX') }}:
           - job: Design4CFX
@@ -116,7 +116,7 @@ stages:
               continueOnError: true
               enabled: true
               inputs:
-                scriptPath: /home/sistudio/agent/jira/addComment.py
+                scriptPath: /home/devops/agent/jira/addComment.py
                 arguments: 'Design_started_for_${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }}'
                 pythonInterpreter: /usr/bin/python3
             - task: PythonScript@0
@@ -124,18 +124,18 @@ stages:
               continueOnError: true
               enabled: true
               inputs:
-                scriptPath: /home/sistudio/agent/plato/plato.py
+                scriptPath: /home/devops/agent/plato/plato.py
                 arguments: 'login -u suparash -p Fashion2020!'
                 pythonInterpreter: /usr/bin/python3
-                workingDirectory: /home/sistudio/agent/plato/
+                workingDirectory: /home/devops/agent/plato/
 
             - task: PythonScript@0
               displayName: 'Plato: Create Project for ${{ parameters.productName }} ${{ parameters.releaseName }}'
               continueOnError: true
               enabled: true
               inputs:
-                scriptPath: /home/sistudio/agent/plato/plato.py
-                arguments: 'createProject -f /home/sistudio/agent/plato/NEF_NEF205_devops.xlsx -n myNEFProject -c NOK'
+                scriptPath: /home/devops/agent/plato/plato.py
+                arguments: 'createProject -f /home/devops/agent/plato/NEF_NEF205_devops.xlsx -n myNEFProject -c NOK'
                 pythonInterpreter: /usr/bin/python3
 
             - task: PythonScript@0
@@ -143,7 +143,7 @@ stages:
               continueOnError: true
               enabled: true
               inputs:
-                scriptPath: /home/sistudio/agent/plato/plato.py
+                scriptPath: /home/devops/agent/plato/plato.py
                 arguments: 'downloadConfiguration  -n myNEFProject -t nef.xml'
                 pythonInterpreter: /usr/bin/python3
 
@@ -156,7 +156,7 @@ stages:
               continueOnError: true
               enabled: true
               inputs:
-                scriptPath: /home/sistudio/agent/jira/addComment.py
+                scriptPath: /home/devops/agent/jira/addComment.py
                 arguments: 'Design_started_for_${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }}'
                 pythonInterpreter: /usr/bin/python3
             - task: PythonScript@0
@@ -164,18 +164,18 @@ stages:
               continueOnError: true
               enabled: true
               inputs:
-                scriptPath: /home/sistudio/agent/plato/plato.py
+                scriptPath: /home/devops/agent/plato/plato.py
                 arguments: 'login -u suparash -p Fashion2020!'
                 pythonInterpreter: /usr/bin/python3
-                workingDirectory: /home/sistudio/agent/plato/
+                workingDirectory: /home/devops/agent/plato/
 
             - task: PythonScript@0
               displayName: 'Plato: Create Project for ${{ parameters.productName }} ${{ parameters.releaseName }}'
               continueOnError: true
               enabled: true
               inputs:
-                scriptPath: /home/sistudio/agent/plato/plato.py
-                arguments: 'createProject -f /home/sistudio/agent/plato/NEF_NEF205_devops.xlsx -n myNEFProject -c NOK'
+                scriptPath: /home/devops/agent/plato/plato.py
+                arguments: 'createProject -f /home/devops/agent/plato/NEF_NEF205_devops.xlsx -n myNEFProject -c NOK'
                 pythonInterpreter: /usr/bin/python3
 
             - task: PythonScript@0
@@ -183,7 +183,7 @@ stages:
               continueOnError: true
               enabled: true
               inputs:
-                scriptPath: /home/sistudio/agent/plato/plato.py
+                scriptPath: /home/devops/agent/plato/plato.py
                 arguments: 'downloadConfiguration  -n myNEFProject -t nef.xml'
                 pythonInterpreter: /usr/bin/python3
 
@@ -196,7 +196,7 @@ stages:
               continueOnError: true
               enabled: true
               inputs:
-                scriptPath: /home/sistudio/agent/jira/addComment.py
+                scriptPath: /home/devops/agent/jira/addComment.py
                 arguments: 'Design_started_for_${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }}'
                 pythonInterpreter: /usr/bin/python3
             - task: PythonScript@0
@@ -204,18 +204,18 @@ stages:
               continueOnError: true
               enabled: true
               inputs:
-                scriptPath: /home/sistudio/agent/plato/plato.py
+                scriptPath: /home/devops/agent/plato/plato.py
                 arguments: 'login -u suparash -p Fashion2020!'
                 pythonInterpreter: /usr/bin/python3
-                workingDirectory: /home/sistudio/agent/plato/
+                workingDirectory: /home/devops/agent/plato/
 
             - task: PythonScript@0
               displayName: 'Plato: Create Project for ${{ parameters.productName }} ${{ parameters.releaseName }}'
               continueOnError: true
               enabled: true
               inputs:
-                scriptPath: /home/sistudio/agent/plato/plato.py
-                arguments: 'createProject -f /home/sistudio/agent/plato/NEF_NEF205_devops.xlsx -n myNEFProject -c NOK'
+                scriptPath: /home/devops/agent/plato/plato.py
+                arguments: 'createProject -f /home/devops/agent/plato/NEF_NEF205_devops.xlsx -n myNEFProject -c NOK'
                 pythonInterpreter: /usr/bin/python3
 
             - task: PythonScript@0
@@ -223,7 +223,7 @@ stages:
               continueOnError: true
               enabled: true
               inputs:
-                scriptPath: /home/sistudio/agent/plato/plato.py
+                scriptPath: /home/devops/agent/plato/plato.py
                 arguments: 'downloadConfiguration  -n myNEFProject -t nef.xml'
                 pythonInterpreter: /usr/bin/python3
                 
@@ -231,7 +231,7 @@ stages:
     - stage: OnboardingPreChk
       displayName: ${{ parameters.productName }} ${{ parameters.releaseName }} Onboarding Precheck
       pool:
-        name: default
+        name: sudPool
       jobs:
       - job: build
         displayName: 'Onboarding Precheck Phase for  ${{ parameters.productName }}  and release ${{parameters.releaseName}}'
@@ -241,7 +241,7 @@ stages:
           continueOnError: true
           enabled: true
           inputs:
-            scriptPath: /home/sistudio/agent/deployment/check.py 
+            scriptPath: /home/devops/agent/deployment/check.py 
             arguments: 'precheck'
             pythonInterpreter: /usr/bin/python3
 
@@ -250,7 +250,7 @@ stages:
     - stage: Onboarding
       displayName: ${{ parameters.productName }} ${{ parameters.releaseName }} Onboarding
       pool:
-        name: default
+        name: sudPool
       jobs:
       - job: build
         displayName: 'Onboarding Phase for  ${{ parameters.productName }}  and release ${{parameters.releaseName}}'
@@ -260,7 +260,7 @@ stages:
           continueOnError: true
           enabled: true
           inputs:
-            scriptPath: /home/sistudio/agent/jira/addComment.py
+            scriptPath: /home/devops/agent/jira/addComment.py
             arguments: 'Onboarding_started_for_${{ parameters.projectName }}_${{ parameters.productName }}_${{ parameters.releaseName }}'
             pythonInterpreter: /usr/bin/python3
         - task: PythonScript@0
@@ -268,7 +268,7 @@ stages:
           continueOnError: true
           enabled: true
           inputs:
-            scriptPath: /home/sistudio/agent/deployment/deployment.py
+            scriptPath: /home/devops/agent/deployment/deployment.py
             arguments: ''
             pythonInterpreter: /usr/bin/python3
             
@@ -276,7 +276,7 @@ stages:
     - stage: OnboardingPostChk
       displayName: ${{ parameters.productName }} ${{ parameters.releaseName }} Onboarding Postcheck
       pool:
-        name: default
+        name: sudPool
       jobs:
       - job: build
         displayName: 'Onboarding PostCheck Phase for  ${{ parameters.productName }}  and release ${{parameters.releaseName}}'
@@ -286,7 +286,7 @@ stages:
           continueOnError: true
           enabled: true
           inputs:
-            scriptPath: /home/sistudio/agent/deployment/check.py 
+            scriptPath: /home/devops/agent/deployment/check.py 
             arguments: 'postcheck'
             pythonInterpreter: /usr/bin/python3
             
@@ -294,7 +294,7 @@ stages:
     - stage: NonFunctional
       displayName: ${{ parameters.productName }} ${{ parameters.releaseName }} Onboarding NonFunctional
       pool:
-        name: default
+        name: sudPool
       jobs:
       - job: build
         displayName: 'Non Functional Test case Phase for  ${{ parameters.productName }}  and release ${{parameters.releaseName}}'
@@ -304,6 +304,6 @@ stages:
           continueOnError: true
           enabled: true
           inputs:
-            scriptPath: /home/sistudio/agent/deployment/check.py 
+            scriptPath: /home/devops/agent/deployment/check.py 
             arguments: 'nonfunctional'
             pythonInterpreter: /usr/bin/python3
